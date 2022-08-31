@@ -14,10 +14,12 @@ export function PomodoroTimer(props: Props): JSX.Element {
   const [mainTime, setMainTime] = useState(props.pomodoroTime);
   const [timeCounting, setTimeCounting] = useState(false);
   const [working, setWorking] = useState(false);
+  const [resting, setResting] = useState(false);
 
   useEffect(() => {
     if (working) document.body.classList.add('working');
-  }, [working]);
+    if (resting) document.body.classList.remove('working');
+  }, [working, resting]);
 
   useInterval(
     () => {
@@ -29,6 +31,20 @@ export function PomodoroTimer(props: Props): JSX.Element {
   const configureWork = () => {
     setTimeCounting(true);
     setWorking(true);
+    setResting(false);
+    setMainTime(props.pomodoroTime);
+  };
+
+  const configureRest = (long: boolean) => {
+    setTimeCounting(true);
+    setWorking(false);
+    setResting(true);
+
+    if (long) {
+      setMainTime(props.longRestTime);
+    } else {
+      setMainTime(props.shortRestTime);
+    }
   };
 
   return (
@@ -37,8 +53,9 @@ export function PomodoroTimer(props: Props): JSX.Element {
       <Timer mainTime={mainTime} />
       <div className="controls">
         <Button text="work" onClick={() => configureWork()}></Button>
-        <Button text="teste" onClick={() => console.log(1)}></Button>
+        <Button text="Rest" onClick={() => configureRest(false)}></Button>
         <Button
+          className={!working && !resting ? 'hidden' : ''}
           text={timeCounting ? 'Pause' : 'Play'}
           onClick={() => setTimeCounting(!timeCounting)}
         ></Button>
