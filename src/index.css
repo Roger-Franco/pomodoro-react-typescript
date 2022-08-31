@@ -50,6 +50,7 @@ body {
 }
 
 .pomodoro button {
+  cursor: pointer;
   background: #41e2ba;
   border: none;
   padding: 10px 25px;
