@@ -2,4 +2,4 @@ npx create-react-app . --template typescript
 
 Repositótio: https://github.com/luizomf/typescript-pomodoro-react
 
-Próxima aula: 26/12
+Próxima aula: 26/13
